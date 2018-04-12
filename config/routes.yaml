@@ -1,6 +1,16 @@
 index:
     path: /
-    controller: App\Controller\AuthController::index
+    controller: App\Controller\TestController::index
+
+product_create:
+    path: /products/
+    controller: App\Controller\ProductController::create
+    methods: [POST]
+
+product_retrieve:
+    path: /products/{id}
+    controller: App\Controller\ProductController::retrieve
+    methods: [GEt]
 
 auth_steam_redirect:
     path: /auth/steam/redirect
