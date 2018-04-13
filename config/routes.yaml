@@ -10,7 +10,7 @@ product_create:
 product_retrieve:
     path: /products/{id}
     controller: App\Controller\ProductController::retrieve
-    methods: [GEt]
+    methods: [GET]
 
 auth_steam_redirect:
     path: /auth/steam/redirect
@@ -19,3 +19,4 @@ auth_steam_redirect:
 auth_steam_verify:
     path: /auth/steam/verify
     controller: App\Controller\AuthController::steamAuthVerify
+    methods: [POST]
