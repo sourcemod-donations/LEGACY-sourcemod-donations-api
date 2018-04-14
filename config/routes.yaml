@@ -2,6 +2,11 @@ index:
     path: /
     controller: App\Controller\TestController::index
 
+product_index:
+    path: /products/
+    controller: App\Controller\ProductController::index
+    methods: [GET]
+
 product_create:
     path: /products/
     controller: App\Controller\ProductController::create

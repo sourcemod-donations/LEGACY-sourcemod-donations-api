@@ -45,4 +45,34 @@ class ProductRepository
         $row = $builder->execute()->fetch();
         return Product::fromState($row);
     }
+
+    /**
+     * @return Product[]
+     */
+    public function findPaged(int $lastId, int $pageSize = 10): array
+    {
+        $builder = $this->connection
+            ->createQueryBuilder()
+            ->select('*')
+            ->from(self::TABLE)
+            ->orderBy('id', 'DESC')
+            ->setMaxResults($pageSize);
+
+        if($lastId > 0)
+        {
+            $builder = $builder
+            ->where('id < ?')
+            ->setParameter(0, $lastId);
+        }
+
+        $rows = $builder->execute()->fetchAll();
+        $products = [];
+
+        foreach ($rows as $row)
+        {
+            $products[] = Product::fromState($row);
+        }
+
+        return $products;
+    }
 }

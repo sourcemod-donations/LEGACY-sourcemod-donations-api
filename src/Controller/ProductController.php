@@ -54,4 +54,18 @@ class ProductController extends Controller
 
         return new JsonResponse($product->toState());
     }
+
+    public function index(Request $request)
+    {
+        $lastId = $request->query->get('last_id', 0);
+        $products = $this->productRepository->findPaged($lastId, 10);
+        $result = [];
+
+        foreach($products as $product)
+        {
+            $result[] = $product->toState();
+        }
+
+        return new JsonResponse($result);
+    }
 }
