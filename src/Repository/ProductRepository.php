@@ -52,6 +52,9 @@ class ProductRepository
             ->setMaxResults(1);
 
         $row = $builder->execute()->fetch();
+        if(!$row)
+            return null;
+
         return Product::fromState($row);
     }
 
