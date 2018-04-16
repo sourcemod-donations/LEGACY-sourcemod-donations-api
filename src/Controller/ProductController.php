@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Exception\FormValidationFailedException;
 use App\Form\CreateProductType;
+use App\Form\EditProductType;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -27,7 +28,7 @@ class ProductController extends Controller
     public function create(Request $request)
     {
         $product = new Product();
-        $form = $this->createForm(CreateProductType::class, $product);
+        $form = $this->createForm(EditProductType::class, $product);
         $form->submit($request->request->all());
 
         if(!$form->isSubmitted() || !$form->isValid())
@@ -36,6 +37,31 @@ class ProductController extends Controller
         }
 
         $this->productRepository->add($product);
+
+        return new JsonResponse([
+            'id' => $product->getId()
+        ], Response::HTTP_CREATED);
+    }
+
+    public function edit(Request $request, int $id)
+    {
+        $product = $this->productRepository->find($id);
+
+        if($product == null) {
+            return new JsonResponse([
+                'message' => 'Product not found'
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        $form = $this->createForm(CreateProductType::class, $product);
+        $form->submit($request->request->all(), false);
+
+        if(!$form->isSubmitted() || !$form->isValid())
+        {
+            throw new FormValidationFailedException($form);
+        }
+
+        $this->productRepository->update($product);
 
         return new JsonResponse([
             'id' => $product->getId()

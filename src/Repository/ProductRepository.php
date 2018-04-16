@@ -32,6 +32,15 @@ class ProductRepository
         return $product;
     }
 
+    public function update(Product $product): void
+    {
+        $state = $product->toState();
+        $id = $state['id'];
+        unset($state['id']);
+
+        $this->connection->update(self::TABLE, $state, ['id' => $id]);
+    }
+
     public function find(int $id): ?Product
     {
         $builder = $this->connection

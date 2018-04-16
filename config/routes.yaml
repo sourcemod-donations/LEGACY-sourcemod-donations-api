@@ -12,6 +12,11 @@ product_create:
     controller: App\Controller\ProductController::create
     methods: [POST]
 
+product_edit:
+    path: /products/{id}
+    controller: App\Controller\ProductController::edit
+    methods: [PATCH]
+
 product_retrieve:
     path: /products/{id}
     controller: App\Controller\ProductController::retrieve
