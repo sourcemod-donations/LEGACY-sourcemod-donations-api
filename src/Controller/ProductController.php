@@ -65,7 +65,7 @@ class ProductController extends Controller
 
         return new JsonResponse([
             'id' => $product->getId()
-        ], Response::HTTP_CREATED);
+        ], Response::HTTP_OK);
     }
 
     public function retrieve(int $id)
