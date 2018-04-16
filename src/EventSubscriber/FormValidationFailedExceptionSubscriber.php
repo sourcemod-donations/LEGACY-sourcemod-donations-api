@@ -40,6 +40,7 @@ class FormValidationFailedExceptionSubscriber implements EventSubscriberInterfac
         }
 
         $message = [
+            'message' => 'Form validation failed',
             'errors' =>
                 $this->serializeFormError(
                     $exception->getForm()
